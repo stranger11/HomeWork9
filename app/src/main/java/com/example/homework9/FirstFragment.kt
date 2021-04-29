@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.work.OneTimeWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import java.util.*
@@ -17,45 +18,33 @@ import java.util.concurrent.TimeUnit
 
 class FirstFragment : Fragment() {
 
-    private lateinit var memoryButton: Button
-    private lateinit var batteryButton: Button
     private lateinit var locButton: Button
+    private lateinit var batteryAndMemoryButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_first, container, false)
-        memoryButton = root.findViewById(R.id.memory_button)
-        batteryButton = root.findViewById(R.id.battery_button)
         locButton = root.findViewById(R.id.loc_button)
+        batteryAndMemoryButton = root.findViewById(R.id.battery_memory_button)
 
-        memoryButton.setOnClickListener {
-
-            val storageAvailable =
-                    PeriodicWorkRequestBuilder<MemoryWorker>(
-                            1,
-                            TimeUnit.HOURS).build()
-
+        batteryAndMemoryButton.setOnClickListener {
+            val storage = OneTimeWorkRequest.from(MemoryWorker::class.java)
+            val battery = OneTimeWorkRequest.from(BatteryWorker::class.java)
             WorkManager
                     .getInstance(requireContext())
-                    .enqueue(storageAvailable)
-        }
-
-        batteryButton.setOnClickListener {
-            val batteryInfo =
-                    PeriodicWorkRequestBuilder<BatteryWorker>(
-                            1,
-                            TimeUnit.HOURS).build()
-
-            WorkManager
-                    .getInstance(requireContext())
-                    .enqueue(batteryInfo)
+                    .beginWith(storage)
+                    .then(battery)
+                    .enqueue()
         }
 
         locButton.setOnClickListener {
             val cal = Calendar.getInstance()
-            val intent = Intent(requireContext(), LocationService::class.java)
+            val intent = Intent(context, LocationService::class.java)
+            if (context != null) {
+                requireContext().startService(intent)
+            }
             val pendingIntent = PendingIntent.getService(
                     requireContext(),
                     0,

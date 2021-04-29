@@ -7,26 +7,16 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/memory_button"
-        android:layout_width="181dp"
-        android:layout_height="98dp"
-        android:layout_marginTop="48dp"
-        android:background="@drawable/custom_button"
-        android:text="memory"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/battery_button"
+        android:id="@+id/battery_memory_button"
         android:layout_width="224dp"
         android:layout_height="101dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="84dp"
         android:background="@drawable/custom_button"
-        android:text="Battery level"
-        app:layout_constraintEnd_toEndOf="@+id/memory_button"
-        app:layout_constraintStart_toStartOf="@+id/memory_button"
-        app:layout_constraintTop_toBottomOf="@+id/memory_button" />
+        android:text="Battery level and Memory"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/loc_button"
@@ -35,8 +25,8 @@
         android:layout_marginTop="24dp"
         android:background="@drawable/custom_button"
         android:text="Location"
-        app:layout_constraintEnd_toEndOf="@+id/battery_button"
+        app:layout_constraintEnd_toEndOf="@+id/battery_memory_button"
         app:layout_constraintHorizontal_bias="0.545"
-        app:layout_constraintStart_toStartOf="@+id/battery_button"
-        app:layout_constraintTop_toBottomOf="@+id/battery_button" />
+        app:layout_constraintStart_toStartOf="@+id/battery_memory_button"
+        app:layout_constraintTop_toBottomOf="@+id/battery_memory_button" />
 </androidx.constraintlayout.widget.ConstraintLayout>
